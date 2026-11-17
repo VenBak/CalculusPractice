@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Reference page — Calculus & Probability</title>
+  <meta name="description" content="Practice tool for the Calculus &amp; Probability exam: topic drills with instant feedback and timed 90-point practice exams.">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="vendor/katex/katex.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="reference">
+  <a class="skip" href="#app">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap site-header__inner">
+      <a class="brand" href="index.html"><span class="brand__mark" aria-hidden="true">∫</span><span class="brand__name">Calculus &amp; Probability<small>exam practice</small></span></a>
+      <nav class="site-nav" aria-label="Main">
+        <a href="index.html">Topics</a>
+        <a href="exam.html">Practice exam</a>
+        <a href="history.html">Progress</a>
+        <a href="reference.html" aria-current="page">Reference page</a>
+      </nav>
+    </div>
+  </header>
+  <main id="app" class="wrap main reference">
+    <div class="page-head"><h1>Reference page</h1><p class="muted">The formula sheet you get on the exam, so you can practise with exactly what you will have.</p></div>
+    <div class="ref-grid">
+      <section class="card">
+        <h2>1 · Algebra</h2>
+        <h3>Exponents and radicals</h3>
+        <ol class="ref-list two">
+          <li>$x^m x^n = x^{m+n}$</li><li>$(x^m)^n = x^{mn}$</li>
+          <li>$(xy)^n = x^n y^n$</li><li>$x^{1/n} = \sqrt[n]{x}$</li>
+          <li>$\sqrt[n]{xy} = \sqrt[n]{x}\sqrt[n]{y}$</li><li>$\dfrac{x^m}{x^n} = x^{m-n}$</li>
+          <li>$x^{-n} = \dfrac{1}{x^n}$</li><li>$\left(\dfrac{x}{y}\right)^n = \dfrac{x^n}{y^n}$</li>
+          <li>$x^{m/n} = \sqrt[n]{x^m} = (\sqrt[n]{x})^m$</li><li>$\sqrt[n]{\dfrac{x}{y}} = \dfrac{\sqrt[n]{x}}{\sqrt[n]{y}}$</li>
+        </ol>
+        <h3>Quadratic formula</h3>
+        <p>If $ax^2 + bx + c = 0$ then $x = \dfrac{-b \pm \sqrt{b^2 - 4ac}}{2a}$.</p>
+      </section>
+      <section class="card">
+        <h2>2 · Geometry</h2>
+        <p>Circle with radius $r$: circumference $C = 2\pi r$, area $A = \pi r^2$.</p>
+        <p>Distance between $(x_1, y_1)$ and $(x_2, y_2)$: $\sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}$.</p>
+        <p>Slope of the line through two points: $m = \dfrac{\Delta y}{\Delta x} = \dfrac{y_2 - y_1}{x_2 - x_1}$.</p>
+        <p>Slope-intercept form: $y = mx + b$. Point-slope form: $y - y_1 = m(x - x_1)$.</p>
+      </section>
+      <section class="card">
+        <h2>3 · Trigonometry</h2>
+        <table class="table ref-table">
+          <thead><tr><th>radians</th><th>$\sin$</th><th>$\cos$</th><th>$\tan$</th></tr></thead>
+          <tbody>
+            <tr><td>$0$</td><td>$0$</td><td>$1$</td><td>$0$</td></tr>
+            <tr><td>$\frac{\pi}{6}$</td><td>$\frac12$</td><td>$\frac{\sqrt3}{2}$</td><td>$\frac{\sqrt3}{3}$</td></tr>
+            <tr><td>$\frac{\pi}{4}$</td><td>$\frac{\sqrt2}{2}$</td><td>$\frac{\sqrt2}{2}$</td><td>$1$</td></tr>
+            <tr><td>$\frac{\pi}{3}$</td><td>$\frac{\sqrt3}{2}$</td><td>$\frac12$</td><td>$\sqrt3$</td></tr>
+            <tr><td>$\frac{\pi}{2}$</td><td>$1$</td><td>$0$</td><td>$-$</td></tr>
+          </tbody>
+        </table>
+        <ol class="ref-list two">
+          <li>$\tan x = \dfrac{\sin x}{\cos x}$</li><li>$\sin^2 x + \cos^2 x = 1$</li>
+          <li>$\sin(-x) = -\sin x$</li><li>$\cos(-x) = \cos x$</li>
+        </ol>
+      </section>
+      <section class="card">
+        <h2>4 · Probability</h2>
+        <p>A probability measure $P$ for sample space $S$ is a function $\mathcal{P}(S) \to \mathbb{R}$ with $P(S) = 1$, and $P(A \cup B) = P(A) + P(B)$ if $A \cap B = \varnothing$. A random variable is a function $X : S \to \mathbb{R}$.</p>
+        <p>$E(X) = P(X = x_1)\cdot x_1 + \dots + P(X = x_n)\cdot x_n$</p>
+        <p>$Var(X) = E\big((X - E(X))^2\big) = \sum_i P(X = x_i)\cdot(x_i - E(X))^2$</p>
+        <p>A pdf is $f : \mathbb{R}\to\mathbb{R}$ with $f \ge 0$ and $\int_{-\infty}^{\infty} f(x)\,dx = 1$. Then $E(X) = \int_{-\infty}^{\infty} x f(x)\,dx$ and $Var(X) = \int_{-\infty}^{\infty} (x - E(X))^2 f(x)\,dx$.</p>
+        <p>Conditional probability: $P(M \mid CS) = \dfrac{P(M \cap CS)}{P(CS)}$. Bayes' rule: $P(H \mid E) = \dfrac{P(E \mid H)\cdot P(H)}{P(E)}$.</p>
+      </section>
+      <section class="card">
+        <h2>5 · Differentiation rules</h2>
+        <ol class="ref-list two">
+          <li>$\frac{d}{dx} c = 0$</li><li>$\frac{d}{dx}[c\,f(x)] = c\,f'(x)$</li>
+          <li>$\frac{d}{dx}[f(x) + g(x)] = f'(x) + g'(x)$</li><li>$\frac{d}{dx}[f(x) - g(x)] = f'(x) - g'(x)$</li>
+          <li>$\frac{d}{dx}[f(x)g(x)] = f'(x)g(x) + f(x)g'(x)$</li><li>$\frac{d}{dx}\left[\frac{f(x)}{g(x)}\right] = \frac{f'(x)g(x) - f(x)g'(x)}{[g(x)]^2}$</li>
+          <li>$\frac{d}{dx} f(g(x)) = f'(g(x))\,g'(x)$ (chain rule)</li><li>$\frac{d}{dx} x^n = n x^{n-1}$</li>
+          <li>$\frac{d}{dx} f(x) = f(x)\frac{d}{dx}[\ln f(x)]$</li><li>$\frac{d}{dx} e^x = e^x$</li>
+          <li>$\frac{d}{dx}\ln|x| = \frac1x$</li><li>$\frac{d}{dx}\sin x = \cos x$, $\ \frac{d}{dx}\cos x = -\sin x$</li>
+        </ol>
+      </section>
+      <section class="card">
+        <h2>6 · Integration rules</h2>
+        <ol class="ref-list two">
+          <li>$\int 0\,dx = C$</li><li>$\int a\,dx = ax + C$</li>
+          <li>$\int x^n\,dx = \frac{1}{n+1}x^{n+1} + C$ $(n \ne -1)$</li><li>$\int \frac1x\,dx = \ln|x| + C$</li>
+          <li>$\int e^x\,dx = e^x + C$</li><li>$\int \sin x\,dx = -\cos x + C$</li>
+          <li>$\int \cos x\,dx = \sin x + C$</li>
+        </ol>
+        <h3>Area between curves</h3>
+        <p>$A = \displaystyle\int_a^b |f(x) - g(x)|\,dx$</p>
+        <h3>Substitution ($u = g(x)$)</h3>
+        <p>$\displaystyle\int f(g(x))g'(x)\,dx = \int f(u)\,du$, $\quad\displaystyle\int_a^b f(g(x))g'(x)\,dx = \int_{g(a)}^{g(b)} f(u)\,du$</p>
+        <h3>Integration by parts</h3>
+        <p>$\displaystyle\int f'g = fg - \int fg'$, $\quad\displaystyle\int fg' = fg - \int f'g$</p>
+      </section>
+    </div>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">Progress is stored only in this browser (localStorage). Export it from the <a href="history.html#data">Progress</a> page to move it to another device.</div>
+  </footer>
+  <script src="vendor/katex/katex.min.js"></script>
+  <script src="vendor/katex/contrib/auto-render.min.js"></script>
+  <script src="vendor/mathjs/math.min.js"></script>
+  <script src="data/topics.js"></script>
+  <script src="js/core/math-check.js"></script>
+  <script src="js/core/storage.js"></script>
+  <script src="js/core/bank.js"></script>
+  <script src="js/core/ui.js"></script>
+  <script src="js/pages/reference.js"></script>
+</body>
+</html>
