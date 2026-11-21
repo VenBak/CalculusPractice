@@ -234,6 +234,7 @@
     for (var i = 0; i < ans.length; i++) {
       var m = mine[i], a = ans[i];
       if (!sameEnd(m.lo, a.lo) || !sameEnd(m.hi, a.hi)) return { ok: false };
+      if (part.ignoreClosure) continue;
       if (isFinite(a.lo) && m.lc !== a.lc) return { ok: false, hint: 'Check whether the endpoints are included.' };
       if (isFinite(a.hi) && m.hc !== a.hc) return { ok: false, hint: 'Check whether the endpoints are included.' };
     }
@@ -241,33 +242,58 @@
   }
 
   /* ------------------------------------------------------------ finite sets */
-  function parseSet(input) {
+  function setElements(input) {
     var s = normalize(input).replace(/^[^=]*=\s*(?=[({])/, '');
     if (/^(∅|\(\s*\)|none|empty)$/i.test(s)) return [];
     s = s.replace(/^\(\s*/, '').replace(/\s*\)$/, '');
-    var bits = splitTop(s, [',', ';']);
-    var vals = [];
-    bits.forEach(function (b) {
-      b = b.replace(/\band\b/g, '').trim();
-      if (!b) return;
-      b = stripLhs(b);
-      var v = evalNum(b);
+    return splitTop(s, [',', ';']).map(function (b) { return stripLhs(b.replace(/\band\b/g, '').trim()); })
+      .filter(function (b) { return b !== ''; });
+  }
+
+  function parseSet(input, scope) {
+    var vals = setElements(input).map(function (b) {
+      var v = evalNum(b, scope);
       if (isNaN(v)) throw new Error('bad');
-      vals.push(v);
+      return v;
     });
     return vals.sort(function (a, b) { return a - b; });
   }
 
   function checkSet(input, part) {
     if (!String(input || '').trim()) return { ok: false, empty: true };
-    var mine;
-    try { mine = parseSet(input); } catch (e) { return { ok: false, error: 'List the values separated by commas, e.g. {0, 1/7}.' }; }
-    var ans = part.answer.map(function (a) { return evalNum(a); }).sort(function (a, b) { return a - b; });
-    // remove duplicates the user may have typed
-    mine = mine.filter(function (v, i) { return i === 0 || !close(v, mine[i - 1], { rel: 1e-9 }); });
-    if (mine.length !== ans.length) return { ok: false, hint: ans.length > mine.length ? 'You are missing at least one value.' : 'You listed too many values.' };
-    for (var i = 0; i < ans.length; i++) if (!close(mine[i], ans[i])) return { ok: false };
+    var scopes = [{}];
+    if (part.vars && part.vars.length) {
+      var R = rng(424242);
+      scopes = [0, 1, 2].map(function () {
+        var sc = {};
+        part.vars.forEach(function (v) {
+          var b = (part.sample && part.sample[v]) || [1, 3];
+          sc[v] = b[0] + (b[1] - b[0]) * (0.05 + 0.9 * R());
+        });
+        return sc;
+      });
+    }
+    for (var s = 0; s < scopes.length; s++) {
+      var mine;
+      try { mine = parseSet(input, scopes[s]); } catch (e) {
+        var m = /Undefined symbol (\w+)/.exec(e.message || '');
+        return { ok: false, error: m ? 'Unknown symbol “' + m[1] + '”.' : 'List the values separated by commas, e.g. {0, 1/7}.' };
+      }
+      var ans = part.answer.map(function (a) { return evalNum(a, scopes[s]); }).sort(function (a, b) { return a - b; });
+      mine = mine.filter(function (v, i) { return i === 0 || !close(v, mine[i - 1], { rel: 1e-9 }); });
+      if (mine.length !== ans.length) return { ok: false, hint: ans.length > mine.length ? 'You are missing at least one value.' : 'You listed too many values.' };
+      for (var i = 0; i < ans.length; i++) if (!close(mine[i], ans[i])) return { ok: false };
+    }
     return { ok: true };
+  }
+
+  /* ------------------------------------------------------------ multiple selection */
+  function checkMulti(input, part) {
+    var picked = (Array.isArray(input) ? input : String(input || '').split(',')).map(String).filter(function (v) { return v !== ''; }).map(Number).sort(function (a, b) { return a - b; });
+    if (!picked.length) return { ok: false, empty: true };
+    var ans = part.answer.slice().sort(function (a, b) { return a - b; });
+    var ok = picked.length === ans.length && picked.every(function (v, i) { return v === ans[i]; });
+    return ok ? { ok: true } : { ok: false, hint: picked.length < ans.length ? 'You selected too few terms.' : picked.length > ans.length ? 'You selected too many terms.' : undefined };
   }
 
   /* ------------------------------------------------------------ dispatch */
@@ -281,6 +307,7 @@
         case 'choice':
           if (input === '' || input == null) return { ok: false, empty: true };
           return { ok: Number(input) === part.answer };
+        case 'multi': return checkMulti(input, part);
       }
     } catch (e) {
       return { ok: false, error: 'Could not read your answer (' + e.message + ').' };
@@ -290,7 +317,7 @@
 
   /* ------------------------------------------------------------ preview */
   function texOf(expr) {
-    return M.parse(expr).toTex({ parenthesis: 'keep', implicit: 'hide' });
+    return M.parse(expr).toTex({ parenthesis: 'keep', implicit: 'hide' }).replace(/\\mathrm\{([a-zA-Z])\}/g, '$1');
   }
 
   function preview(input, kind) {
@@ -305,9 +332,7 @@
         }).join(' \\cup ');
       }
       if (kind === 'set') {
-        var s = normalize(raw).replace(/^[^=]*=\s*(?=[({])/, '').replace(/^\(\s*/, '').replace(/\s*\)$/, '');
-        return '\\{' + splitTop(s, [',', ';']).filter(function (b) { return b.trim(); })
-          .map(function (b) { return texOf(stripLhs(b.trim())); }).join(',\\ ') + '\\}';
+        return '\\{' + setElements(raw).map(texOf).join(',\\ ') + '\\}';
       }
       var n = stripLhs(normalize(raw));
       return texOf(n);
@@ -323,7 +348,13 @@
     return String(+n.toPrecision(6));
   }
 
-  var MC = { normalize: normalize, checkPart: checkPart, preview: preview, parseIntervals: parseIntervals, parseSet: parseSet, evalNum: evalNum };
+  /* points earned for one question: parts carry their own points, otherwise the item points are split evenly */
+  function partPoints(parts, total) {
+    var given = parts.every(function (p) { return p.points != null; });
+    return parts.map(function (p) { return given ? p.points : total / parts.length; });
+  }
+
+  var MC = { partPoints: partPoints, normalize: normalize, checkPart: checkPart, preview: preview, parseIntervals: parseIntervals, parseSet: parseSet, evalNum: evalNum };
   root.MathCheck = MC;
   if (typeof module !== 'undefined' && module.exports) module.exports = MC;
 })(typeof window !== 'undefined' ? window : globalThis);

@@ -3,11 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Reference page — Calculus & Probability</title>
-  <meta name="description" content="Practice tool for the Calculus &amp; Probability exam: topic drills with instant feedback and timed 90-point practice exams.">
+  <title>Reference page — Calculus &amp; Probability</title>
+  <meta name="description" content="The exam formula sheet plus an extended reference of derivatives, primitives, limits and distributions.">
+  <meta name="color-scheme" content="light dark">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="vendor/katex/katex.min.css">
   <link rel="stylesheet" href="css/style.css">
+  <script src="js/core/theme.js"></script>
 </head>
 <body data-page="reference">
   <a class="skip" href="#app">Skip to content</a>
@@ -16,16 +18,22 @@
       <a class="brand" href="index.html"><span class="brand__mark" aria-hidden="true">∫</span><span class="brand__name">Calculus &amp; Probability<small>exam practice</small></span></a>
       <nav class="site-nav" aria-label="Main">
         <a href="index.html">Topics</a>
+        <a href="practice.html?mode=random">Random</a>
         <a href="exam.html">Practice exam</a>
+        <a href="past-exams.html">Past exams</a>
+        <a href="guide.html">Refreshers</a>
         <a href="history.html">Progress</a>
-        <a href="reference.html" aria-current="page">Reference page</a>
+        <a href="reference.html" aria-current="page">Reference</a>
+        <a href="data.html">Data</a>
       </nav>
     </div>
   </header>
   <main id="app" class="wrap main reference">
-    <div class="page-head"><h1>Reference page</h1><p class="muted">The formula sheet you get on the exam, so you can practise with exactly what you will have.</p></div>
+    <div class="page-head"><h1>Reference page</h1><p class="muted">Sections 1–6 are the formula sheet you get on the exam, so you can practise with exactly what you will have. Sections 7–13 are an extended reference with everything else that is useful to know by heart.</p>
+      <div class="seg" role="group" aria-label="Show sections"><button class="seg__btn is-on" data-show="all" aria-pressed="true">Everything</button><button class="seg__btn" data-show="sheet" aria-pressed="false">Exam sheet only</button><button class="seg__btn" data-show="extra" aria-pressed="false">Extra only</button></div></div>
     <div class="ref-grid">
-      <section class="card">
+      <section class="card ref-official">
+        <span class="tag tag--sheet">on the exam sheet</span>
         <h2>1 · Algebra</h2>
         <h3>Exponents and radicals</h3>
         <ol class="ref-list two">
@@ -38,14 +46,16 @@
         <h3>Quadratic formula</h3>
         <p>If $ax^2 + bx + c = 0$ then $x = \dfrac{-b \pm \sqrt{b^2 - 4ac}}{2a}$.</p>
       </section>
-      <section class="card">
+      <section class="card ref-official">
+        <span class="tag tag--sheet">on the exam sheet</span>
         <h2>2 · Geometry</h2>
         <p>Circle with radius $r$: circumference $C = 2\pi r$, area $A = \pi r^2$.</p>
         <p>Distance between $(x_1, y_1)$ and $(x_2, y_2)$: $\sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}$.</p>
         <p>Slope of the line through two points: $m = \dfrac{\Delta y}{\Delta x} = \dfrac{y_2 - y_1}{x_2 - x_1}$.</p>
         <p>Slope-intercept form: $y = mx + b$. Point-slope form: $y - y_1 = m(x - x_1)$.</p>
       </section>
-      <section class="card">
+      <section class="card ref-official">
+        <span class="tag tag--sheet">on the exam sheet</span>
         <h2>3 · Trigonometry</h2>
         <table class="table ref-table">
           <thead><tr><th>radians</th><th>$\sin$</th><th>$\cos$</th><th>$\tan$</th></tr></thead>
@@ -62,7 +72,8 @@
           <li>$\sin(-x) = -\sin x$</li><li>$\cos(-x) = \cos x$</li>
         </ol>
       </section>
-      <section class="card">
+      <section class="card ref-official">
+        <span class="tag tag--sheet">on the exam sheet</span>
         <h2>4 · Probability</h2>
         <p>A probability measure $P$ for sample space $S$ is a function $\mathcal{P}(S) \to \mathbb{R}$ with $P(S) = 1$, and $P(A \cup B) = P(A) + P(B)$ if $A \cap B = \varnothing$. A random variable is a function $X : S \to \mathbb{R}$.</p>
         <p>$E(X) = P(X = x_1)\cdot x_1 + \dots + P(X = x_n)\cdot x_n$</p>
@@ -70,7 +81,8 @@
         <p>A pdf is $f : \mathbb{R}\to\mathbb{R}$ with $f \ge 0$ and $\int_{-\infty}^{\infty} f(x)\,dx = 1$. Then $E(X) = \int_{-\infty}^{\infty} x f(x)\,dx$ and $Var(X) = \int_{-\infty}^{\infty} (x - E(X))^2 f(x)\,dx$.</p>
         <p>Conditional probability: $P(M \mid CS) = \dfrac{P(M \cap CS)}{P(CS)}$. Bayes' rule: $P(H \mid E) = \dfrac{P(E \mid H)\cdot P(H)}{P(E)}$.</p>
       </section>
-      <section class="card">
+      <section class="card ref-official">
+        <span class="tag tag--sheet">on the exam sheet</span>
         <h2>5 · Differentiation rules</h2>
         <ol class="ref-list two">
           <li>$\frac{d}{dx} c = 0$</li><li>$\frac{d}{dx}[c\,f(x)] = c\,f'(x)$</li>
@@ -81,7 +93,8 @@
           <li>$\frac{d}{dx}\ln|x| = \frac1x$</li><li>$\frac{d}{dx}\sin x = \cos x$, $\ \frac{d}{dx}\cos x = -\sin x$</li>
         </ol>
       </section>
-      <section class="card">
+      <section class="card ref-official">
+        <span class="tag tag--sheet">on the exam sheet</span>
         <h2>6 · Integration rules</h2>
         <ol class="ref-list two">
           <li>$\int 0\,dx = C$</li><li>$\int a\,dx = ax + C$</li>
@@ -96,10 +109,190 @@
         <h3>Integration by parts</h3>
         <p>$\displaystyle\int f'g = fg - \int fg'$, $\quad\displaystyle\int fg' = fg - \int f'g$</p>
       </section>
+    
+      <section class="card ref-extra">
+        <span class="tag tag--extra">extra</span>
+        <h2>7 · All derivatives</h2>
+        <ol class="ref-list two">
+          <li>$(a^x)' = a^x\ln a$</li><li>$(\log_a x)' = \dfrac{1}{x\ln a}$</li>
+          <li>$(e^{kx})' = k\,e^{kx}$</li><li>$(\sqrt{x})' = \dfrac{1}{2\sqrt{x}}$</li>
+          <li>$\left(\dfrac1x\right)' = -\dfrac{1}{x^2}$</li><li>$(\ln f(x))' = \dfrac{f'(x)}{f(x)}$</li>
+          <li>$(\tan x)' = \dfrac{1}{\cos^2 x} = 1 + \tan^2 x$</li><li>$(\cot x)' = -\dfrac{1}{\sin^2 x}$</li>
+          <li>$\left(\dfrac{1}{\cos x}\right)' = \dfrac{\sin x}{\cos^2 x}$</li><li>$\left(\dfrac{1}{\sin x}\right)' = -\dfrac{\cos x}{\sin^2 x}$</li>
+          <li>$(\arcsin x)' = \dfrac{1}{\sqrt{1 - x^2}}$</li><li>$(\arccos x)' = -\dfrac{1}{\sqrt{1 - x^2}}$</li>
+          <li>$(\arctan x)' = \dfrac{1}{1 + x^2}$</li><li>$(|x|)' = \dfrac{x}{|x|}\ (x \ne 0)$</li>
+          <li>$(x^x)' = x^x(\ln x + 1)$</li><li>$\big(u^v\big)' = u^v\left(v'\ln u + \dfrac{v\,u'}{u}\right)$</li>
+          <li>$(fg)'' = f''g + 2f'g' + fg''$</li><li>$\left(\dfrac{1}{g}\right)' = -\dfrac{g'}{g^2}$</li>
+        </ol>
+        <h3>Definition, inverse and implicit</h3>
+        <p>$f'(a) = \displaystyle\lim_{h\to0}\frac{f(a+h) - f(a)}{h}$ — for one-sided derivatives take $h\to0^-$ or $h\to0^+$.</p>
+        <p>Inverse function: $(f^{-1})'(y_0) = \dfrac{1}{f'(x_0)}$ where $y_0 = f(x_0)$.</p>
+        <p>Implicit curve $F(x,y) = 0$: $\ y' = -\dfrac{\partial F/\partial x}{\partial F/\partial y}$. Mixed partials: $\dfrac{\partial^2 f}{\partial x\,\partial y} = \dfrac{\partial^2 f}{\partial y\,\partial x}$.</p>
+      </section>
+
+      <section class="card ref-extra">
+        <span class="tag tag--extra">extra</span>
+        <h2>8 · Primitives</h2>
+        <p class="muted small">Add $+\,C$ to every primitive; $a \ne 0$.</p>
+        <ol class="ref-list two">
+          <li>$\int a^x\,dx = \dfrac{a^x}{\ln a}$</li><li>$\int e^{kx}\,dx = \dfrac{1}{k}e^{kx}$</li>
+          <li>$\int \dfrac{dx}{ax + b} = \dfrac1a\ln|ax + b|$</li><li>$\int (ax+b)^n\,dx = \dfrac{(ax+b)^{n+1}}{a(n+1)}\ (n \ne -1)$</li>
+          <li>$\int \sqrt{x}\,dx = \tfrac23 x^{3/2}$</li><li>$\int \dfrac{dx}{\sqrt{x}} = 2\sqrt{x}$</li>
+          <li>$\int \ln x\,dx = x\ln x - x$</li><li>$\int x^n\ln x\,dx = \dfrac{x^{n+1}}{n+1}\left(\ln x - \dfrac{1}{n+1}\right)$</li>
+          <li>$\int x e^{x}\,dx = (x - 1)e^{x}$</li><li>$\int \tan x\,dx = -\ln|\cos x|$</li>
+          <li>$\int \dfrac{dx}{\cos^2 x} = \tan x$</li><li>$\int \dfrac{dx}{\sin^2 x} = -\cot x$</li>
+          <li>$\int \sin^2 x\,dx = \dfrac x2 - \dfrac{\sin 2x}{4}$</li><li>$\int \cos^2 x\,dx = \dfrac x2 + \dfrac{\sin 2x}{4}$</li>
+          <li>$\int \dfrac{dx}{1 + x^2} = \arctan x$</li><li>$\int \dfrac{dx}{x^2 + a^2} = \dfrac1a\arctan\dfrac xa$</li>
+          <li>$\int \dfrac{dx}{\sqrt{1 - x^2}} = \arcsin x$</li><li>$\int \dfrac{dx}{\sqrt{a^2 - x^2}} = \arcsin\dfrac{x}{|a|}$</li>
+          <li>$\int \dfrac{dx}{x^2 - a^2} = \dfrac{1}{2a}\ln\left|\dfrac{x - a}{x + a}\right|$</li><li>$\int \dfrac{x\,dx}{x^2 + a^2} = \tfrac12\ln(x^2 + a^2)$</li>
+          <li>$\int \dfrac{f'(x)}{f(x)}\,dx = \ln|f(x)|$</li><li>$\int f'(x)f(x)^n\,dx = \dfrac{f(x)^{n+1}}{n+1}\ (n \ne -1)$</li>
+          <li>$\int f'(x)e^{f(x)}\,dx = e^{f(x)}$</li><li>$\int f'(x)\cos f(x)\,dx = \sin f(x)$</li>
+        </ol>
+        <h3>Exponential times sine/cosine</h3>
+        <p>$\displaystyle\int e^{ax}\sin bx\,dx = \frac{e^{ax}(a\sin bx - b\cos bx)}{a^2 + b^2}$, $\quad\displaystyle\int e^{ax}\cos bx\,dx = \frac{e^{ax}(a\cos bx + b\sin bx)}{a^2 + b^2}$</p>
+      </section>
+
+      <section class="card ref-extra">
+        <span class="tag tag--extra">extra</span>
+        <h2>9 · Limits</h2>
+        <ol class="ref-list two">
+          <li>$\displaystyle\lim_{x\to0}\frac{\sin x}{x} = 1$</li><li>$\displaystyle\lim_{x\to0}\frac{\tan x}{x} = 1$</li>
+          <li>$\displaystyle\lim_{x\to0}\frac{1 - \cos x}{x^2} = \frac12$</li><li>$\displaystyle\lim_{x\to0}\frac{e^x - 1}{x} = 1$</li>
+          <li>$\displaystyle\lim_{x\to0}\frac{\ln(1 + x)}{x} = 1$</li><li>$\displaystyle\lim_{x\to0}(1 + x)^{1/x} = e$</li>
+          <li>$\displaystyle\lim_{x\to\infty}\left(1 + \frac ax\right)^{bx} = e^{ab}$</li><li>$\displaystyle\lim_{x\to\infty}\left(\sqrt{x^2 + ax} - x\right) = \frac a2$</li>
+          <li>$\displaystyle\lim_{x\to\infty}\frac{x^p}{e^{x}} = 0$</li><li>$\displaystyle\lim_{x\to\infty}\frac{\ln x}{x^p} = 0\ (p \gt 0)$</li>
+          <li>$\displaystyle\lim_{x\to0^+}x^p\ln x = 0\ (p \gt 0)$</li><li>$\displaystyle\lim_{x\to0^+}x^x = 1$</li>
+        </ol>
+        <p class="small">Growth order as $x\to\infty$: $\ \ln x \ll x^p \ll a^x\ (a \gt 1)$.</p>
+        <h3>L'Hôpital's rule</h3>
+        <p>If $\lim\frac{f}{g}$ is of the form $\frac00$ or $\frac{\pm\infty}{\pm\infty}$, then $\displaystyle\lim\frac{f(x)}{g(x)} = \lim\frac{f'(x)}{g'(x)}$ (when the right-hand limit exists).</p>
+        <table class="table ref-table">
+          <thead><tr><th>Form</th><th>Rewrite as</th></tr></thead>
+          <tbody>
+            <tr><td>$0\cdot\infty$</td><td>$f\cdot g = \dfrac{f}{1/g}$</td></tr>
+            <tr><td>$\infty - \infty$</td><td>one fraction (common denominator, or conjugate for roots)</td></tr>
+            <tr><td>$1^\infty,\ 0^0,\ \infty^0$</td><td>$f^g = e^{\,g\ln f}$: find $\lim g\ln f$ first</td></tr>
+          </tbody>
+        </table>
+        <p class="small">Squeeze: if $g \le f \le h$ near $a$ and $\lim g = \lim h = L$, then $\lim f = L$.</p>
+      </section>
+
+      <section class="card ref-extra">
+        <span class="tag tag--extra">extra</span>
+        <h2>10 · Logs, algebra &amp; trig identities</h2>
+        <ol class="ref-list two">
+          <li>$\ln(ab) = \ln a + \ln b$</li><li>$\ln\dfrac ab = \ln a - \ln b$</li>
+          <li>$\ln a^r = r\ln a$</li><li>$\log_a x = \dfrac{\ln x}{\ln a}$</li>
+          <li>$a^x = e^{x\ln a}$</li><li>$e^{\ln x} = x\ (x \gt 0)$, $\ \ln e^x = x$</li>
+          <li>$a^2 - b^2 = (a - b)(a + b)$</li><li>$(a \pm b)^2 = a^2 \pm 2ab + b^2$</li>
+          <li>$a^3 - b^3 = (a - b)(a^2 + ab + b^2)$</li><li>$a^3 + b^3 = (a + b)(a^2 - ab + b^2)$</li>
+          <li>$\sqrt{x^2} = |x|$</li><li>$|x - a| \lt r \iff a - r \lt x \lt a + r$</li>
+        </ol>
+        <h3>Trigonometry</h3>
+        <ol class="ref-list two">
+          <li>$\sin 2x = 2\sin x\cos x$</li><li>$\cos 2x = \cos^2 x - \sin^2 x$</li>
+          <li>$\cos 2x = 2\cos^2 x - 1 = 1 - 2\sin^2 x$</li><li>$1 + \tan^2 x = \dfrac{1}{\cos^2 x}$</li>
+          <li>$\sin(x \pm y) = \sin x\cos y \pm \cos x\sin y$</li><li>$\cos(x \pm y) = \cos x\cos y \mp \sin x\sin y$</li>
+          <li>$\sin(\pi - x) = \sin x$, $\ \cos(\pi - x) = -\cos x$</li><li>$\sin\left(x + \tfrac\pi2\right) = \cos x$, $\ \cos\left(x + \tfrac\pi2\right) = -\sin x$</li>
+          <li>$\tan(-x) = -\tan x$</li><li>$\sin, \cos$ have period $2\pi$; $\tan$ has period $\pi$</li>
+        </ol>
+        <table class="table ref-table">
+          <thead><tr><th>radians</th><th>$\sin$</th><th>$\cos$</th><th>$\tan$</th></tr></thead>
+          <tbody>
+            <tr><td>$\frac{2\pi}{3}$</td><td>$\frac{\sqrt3}{2}$</td><td>$-\frac12$</td><td>$-\sqrt3$</td></tr>
+            <tr><td>$\frac{3\pi}{4}$</td><td>$\frac{\sqrt2}{2}$</td><td>$-\frac{\sqrt2}{2}$</td><td>$-1$</td></tr>
+            <tr><td>$\frac{5\pi}{6}$</td><td>$\frac12$</td><td>$-\frac{\sqrt3}{2}$</td><td>$-\frac{\sqrt3}{3}$</td></tr>
+            <tr><td>$\pi$</td><td>$0$</td><td>$-1$</td><td>$0$</td></tr>
+            <tr><td>$\frac{3\pi}{2}$</td><td>$-1$</td><td>$0$</td><td>$-$</td></tr>
+          </tbody>
+        </table>
+        <p class="small">Inverse trig: $\arctan 1 = \frac\pi4$, $\arctan\sqrt3 = \frac\pi3$, $\arctan\frac{1}{\sqrt3} = \frac\pi6$, $\arcsin\frac12 = \frac\pi6$, $\arccos\frac12 = \frac\pi3$; $\ \arctan x \to \pm\frac\pi2$ as $x\to\pm\infty$.</p>
+      </section>
+
+      <section class="card ref-extra">
+        <span class="tag tag--extra">extra</span>
+        <h2>11 · Analysing a function</h2>
+        <table class="table ref-table">
+          <thead><tr><th>Building block</th><th>Domain condition</th></tr></thead>
+          <tbody>
+            <tr><td>$\dfrac{p(x)}{q(x)}$</td><td>$q(x) \ne 0$</td></tr>
+            <tr><td>$\sqrt{g(x)}$ (even root)</td><td>$g(x) \ge 0$</td></tr>
+            <tr><td>$\ln g(x)$, $\log_a g(x)$</td><td>$g(x) \gt 0$</td></tr>
+            <tr><td>$\arcsin g(x)$, $\arccos g(x)$</td><td>$-1 \le g(x) \le 1$</td></tr>
+            <tr><td>$\tan g(x)$</td><td>$g(x) \ne \frac\pi2 + k\pi$</td></tr>
+          </tbody>
+        </table>
+        <ol class="ref-list">
+          <li>Even: $f(-x) = f(x)$; odd: $f(-x) = -f(x)$. Odd·odd and even·even are even; odd·even is odd.</li>
+          <li>Continuous at $a$: $\lim_{x\to a^-}f(x) = \lim_{x\to a^+}f(x) = f(a)$. Differentiable $\Rightarrow$ continuous.</li>
+          <li>Tangent line at $a$: $y = f(a) + f'(a)(x - a)$. Normal line: slope $-1/f'(a)$.</li>
+          <li>Critical point: $c \in D_f$ with $f'(c) = 0$ or $f'(c)$ undefined.</li>
+          <li>$f' \gt 0$: increasing, $f' \lt 0$: decreasing. Sign of $f'$ goes $+\to-$: local max; $-\to+$: local min.</li>
+          <li>Second derivative test: $f'(c) = 0$, $f''(c) \lt 0$: local max; $f''(c) \gt 0$: local min.</li>
+          <li>$f'' \gt 0$: convex (concave up); $f'' \lt 0$: concave (down). Inflection point: $f''$ changes sign.</li>
+          <li>Absolute extrema on $[a,b]$: compare $f$ at critical points and at $a$, $b$.</li>
+          <li>Vertical asymptote $x = a$: $f(x)\to\pm\infty$ as $x\to a^{\pm}$. Horizontal $y = L$: $L = \lim_{x\to\pm\infty}f(x)$.</li>
+          <li>Slant asymptote $y = mx + b$: $m = \lim\frac{f(x)}{x}$, $b = \lim\big(f(x) - mx\big)$ (separately for $\pm\infty$).</li>
+          <li>Rolle / mean value theorem: $f'(c) = \dfrac{f(b) - f(a)}{b - a}$ for some $c \in (a,b)$.</li>
+        </ol>
+      </section>
+
+      <section class="card ref-extra">
+        <span class="tag tag--extra">extra</span>
+        <h2>12 · Integration techniques</h2>
+        <h3>Partial fractions ($\deg P \lt \deg Q$, otherwise divide first)</h3>
+        <table class="table ref-table">
+          <thead><tr><th>Factor of $Q(x)$</th><th>Terms</th></tr></thead>
+          <tbody>
+            <tr><td>$(x - a)$</td><td>$\dfrac{A}{x - a}$</td></tr>
+            <tr><td>$(x - a)^k$</td><td>$\dfrac{A_1}{x - a} + \dfrac{A_2}{(x - a)^2} + \dots + \dfrac{A_k}{(x - a)^k}$</td></tr>
+            <tr><td>$ax^2 + bx + c$, $\ b^2 - 4ac \lt 0$</td><td>$\dfrac{Bx + C}{ax^2 + bx + c}$</td></tr>
+          </tbody>
+        </table>
+        <h3>Fundamental theorem</h3>
+        <p>$\displaystyle\int_a^b f(x)\,dx = F(b) - F(a)$, $\quad\dfrac{d}{dx}\displaystyle\int_a^{g(x)} f(t)\,dt = f(g(x))\,g'(x)$</p>
+        <h3>Riemann sums</h3>
+        <p>$\displaystyle\lim_{n\to\infty}\frac1n\sum_{r=1}^{n} f\!\left(\frac rn\right) = \int_0^1 f(x)\,dx$, $\quad\displaystyle\lim_{n\to\infty}\frac{b-a}{n}\sum_{r=1}^{n} f\!\left(a + r\,\frac{b-a}{n}\right) = \int_a^b f(x)\,dx$</p>
+        <p class="small">$\displaystyle\sum_{r=1}^n r = \frac{n(n+1)}{2}$, $\ \displaystyle\sum_{r=1}^n r^2 = \frac{n(n+1)(2n+1)}{6}$</p>
+        <h3>Improper integrals</h3>
+        <p>$\displaystyle\int_a^\infty f(x)\,dx = \lim_{R\to\infty}\int_a^R f(x)\,dx$. $\ \displaystyle\int_1^\infty\frac{dx}{x^p}$ converges iff $p \gt 1$; $\ \displaystyle\int_0^1\frac{dx}{x^p}$ converges iff $p \lt 1$.</p>
+        <h3>Symmetry, averages, volume</h3>
+        <ol class="ref-list">
+          <li>$f$ odd: $\int_{-a}^a f = 0$; $\ f$ even: $\int_{-a}^a f = 2\int_0^a f$.</li>
+          <li>Average value on $[a,b]$: $\dfrac{1}{b - a}\displaystyle\int_a^b f(x)\,dx$.</li>
+          <li>Volume when rotating about the $x$-axis: $V = \pi\displaystyle\int_a^b f(x)^2\,dx$.</li>
+        </ol>
+      </section>
+
+      <section class="card ref-extra">
+        <span class="tag tag--extra">extra</span>
+        <h2>13 · Probability rules &amp; distributions</h2>
+        <ol class="ref-list">
+          <li>$P(A^c) = 1 - P(A)$, $\ P(A \cup B) = P(A) + P(B) - P(A \cap B)$.</li>
+          <li>Independent: $P(A \cap B) = P(A)P(B)$, i.e. $P(A \mid B) = P(A)$.</li>
+          <li>Total probability: $P(E) = \sum_i P(E \mid H_i)P(H_i)$ for a partition $H_1, H_2, \dots$</li>
+          <li>Bayes: $P(H_j \mid E) = \dfrac{P(E \mid H_j)P(H_j)}{\sum_i P(E \mid H_i)P(H_i)}$.</li>
+          <li>Counting: $n!$ orderings; $\binom nk = \dfrac{n!}{k!\,(n-k)!}$ subsets of size $k$; $\dfrac{n!}{(n-k)!}$ ordered selections.</li>
+          <li>$E(aX + b) = aE(X) + b$, $\ Var(aX + b) = a^2Var(X)$, $\ Var(X) = E(X^2) - E(X)^2$.</li>
+          <li>$E(X + Y) = E(X) + E(Y)$; if independent, $Var(X + Y) = Var(X) + Var(Y)$.</li>
+          <li>cdf: $F(x) = P(X \le x) = \int_{-\infty}^x f(t)\,dt$, $\ F' = f$, $\ P(a \lt X \le b) = F(b) - F(a)$; median $m$: $F(m) = \tfrac12$.</li>
+        </ol>
+        <table class="table ref-table">
+          <thead><tr><th>Distribution</th><th>$P(X = k)$ or $f(x)$</th><th>$E(X)$</th><th>$Var(X)$</th></tr></thead>
+          <tbody>
+            <tr><td>Binomial $(n, p)$</td><td>$\binom nk p^k(1-p)^{n-k}$</td><td>$np$</td><td>$np(1-p)$</td></tr>
+            <tr><td>Geometric (1st success at $k$)</td><td>$(1-p)^{k-1}p$</td><td>$\frac1p$</td><td>$\frac{1-p}{p^2}$</td></tr>
+            <tr><td>Uniform on $\{1,\dots,n\}$</td><td>$\frac1n$</td><td>$\frac{n+1}{2}$</td><td>$\frac{n^2-1}{12}$</td></tr>
+            <tr><td>Uniform on $[a,b]$</td><td>$\frac{1}{b-a}$</td><td>$\frac{a+b}{2}$</td><td>$\frac{(b-a)^2}{12}$</td></tr>
+            <tr><td>Exponential $(\lambda)$</td><td>$\lambda e^{-\lambda x},\ x \ge 0$</td><td>$\frac1\lambda$</td><td>$\frac{1}{\lambda^2}$</td></tr>
+          </tbody>
+        </table>
+        <p class="small">Exponential: $F(x) = 1 - e^{-\lambda x}$, $\ P(X \gt x) = e^{-\lambda x}$.</p>
+      </section>
     </div>
   </main>
   <footer class="site-footer">
-    <div class="wrap">Progress is stored only in this browser (localStorage). Export it from the <a href="history.html#data">Progress</a> page to move it to another device.</div>
+    <div class="wrap">Progress is stored only in this browser (localStorage). Use <a href="data.html">Backup &amp; transfer</a> to copy it to another device or browser.</div>
   </footer>
   <script src="vendor/katex/katex.min.js"></script>
   <script src="vendor/katex/contrib/auto-render.min.js"></script>

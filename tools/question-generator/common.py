@@ -59,6 +59,89 @@ def val(e):
     return float(sp.N(e))
 
 
+
+# ---------------------------------------------------------------- answer-shape hints
+
+def _features(e):
+    e = sp.sympify(e)
+    out = []
+    if e.has(sp.pi):
+        out.append(r'$\pi$')
+    if e.has(sp.E) or e.has(sp.exp):
+        out.append('$e$')
+    if e.has(sp.log):
+        out.append('a logarithm')
+    if any(isinstance(a, sp.Pow) and a.exp.is_Rational and not a.exp.is_Integer for a in sp.preorder_traversal(e)):
+        out.append('a root')
+    if e.has(sp.sin, sp.cos, sp.tan):
+        out.append('a trigonometric function')
+    if e.has(sp.atan, sp.asin, sp.acos):
+        out.append('an inverse trigonometric function')
+    return out
+
+
+def _join(xs):
+    return xs[0] if len(xs) == 1 else ', '.join(xs[:-1]) + ' and ' + xs[-1]
+
+
+def num_shape(v, prob=False):
+    v = sp.sympify(v)
+    try:
+        fv = val(v)
+    except Exception:
+        return None
+    if v in (sp.oo, -sp.oo):
+        return 'The limit is infinite (state the sign).'
+    sign = 'zero' if fv == 0 else ('positive' if fv > 0 else 'negative')
+    if v.is_Integer:
+        return 'The answer is an integer.' if sign == 'zero' else 'The answer is a %s integer.' % sign
+    if v.is_Rational:
+        return 'The answer is a %s fraction (not an integer).' % sign
+    feats = _features(v)
+    if prob:
+        return 'This is a probability, so it lies between $0$ and $1$; it is %s $\\tfrac12$.' % ('below' if fv < 0.5 else 'at least')
+    if feats:
+        return 'The exact answer is %s and involves %s.' % (sign, _join(feats))
+    return 'The answer is %s.' % sign
+
+
+def expr_shape(e, vars=('x',), upc=False):
+    e = sp.sympify(e)
+    syms = [sp.Symbol(v, real=True) for v in vars]
+    txt = None
+    try:
+        if len(syms) == 1 and e.is_polynomial(syms[0]):
+            dg = sp.degree(sp.expand(e), syms[0])
+            txt = 'The answer is a polynomial of degree %d in $%s$.' % (dg, vars[0]) if dg > 0 else 'The answer is a constant.'
+        elif len(syms) == 1 and e.is_rational_function(syms[0]):
+            txt = 'The answer is a quotient of two polynomials in $%s$.' % vars[0]
+    except Exception:
+        txt = None
+    if txt is None:
+        feats = _features(e)
+        txt = ('The answer contains %s.' % _join(feats)) if feats else 'The answer is an expression in $%s$.' % ', '.join(vars)
+    if upc:
+        txt += ' Adding $+C$ is optional.'
+    return txt
+
+
+def iv_shape(ivs):
+    n_ = len(ivs)
+    bounded = all(lo != -oo and hi != oo for lo, hi, _, _ in ivs)
+    closed_any = any(lc or hc for _, _, lc, hc in ivs)
+    s = 'The answer is %s%s, %s.' % ('a single interval' if n_ == 1 else 'a union of %d intervals' % n_, '' if bounded else ' reaching infinity',
+                                    'with at least one endpoint included' if closed_any else 'with all endpoints excluded')
+    return s
+
+
+def set_shape(vals):
+    vals = [sp.sympify(v) for v in vals]
+    s = 'There %s %d value%s.' % ('is' if len(vals) == 1 else 'are', len(vals), '' if len(vals) == 1 else 's')
+    if any(v == 0 for v in vals):
+        s += ' One of them is $0$.'
+    return s
+
+
 # ---------------------------------------------------------------- parts
 
 def P_num(label, value, tol=None, approx=False):
@@ -68,6 +151,7 @@ def P_num(label, value, tol=None, approx=False):
         d['latex'] = L(value) + r' \approx ' + ('%.4f' % val(value))
     if tol:
         d['tol'] = tol
+    d['_shape'] = num_shape(value)
     return d
 
 
@@ -77,6 +161,7 @@ def P_prob(label, value):
     d = P_num(label, value, tol={'abs': 5e-4})
     if not value.is_Integer:
         d['latex'] = L(value) + r' \approx ' + ('%.4f' % val(value))
+    d['_shape'] = num_shape(value, prob=True)
     return d
 
 
@@ -84,7 +169,8 @@ def P_approx(label, value, digits=4):
     """Numeric answers that only make sense as decimals (e.g. binomial tails)."""
     v = val(value)
     return {'kind': 'number', 'label': label, 'answer': repr(round(v, 10)),
-            'latex': r'\approx %.*f' % (digits, v), 'tol': {'abs': 5e-4}}
+            'latex': r'\approx %.*f' % (digits, v), 'tol': {'abs': 5e-4},
+            '_shape': 'Give a decimal with at least 3 correct decimals; it lies between $0$ and $1$ (it is %s $\\tfrac12$).' % ('below' if v < 0.5 else 'at least')}
 
 
 def P_expr(label, e, vars=('x',), sample=None, upc=False):
@@ -95,6 +181,7 @@ def P_expr(label, e, vars=('x',), sample=None, upc=False):
     if upc:
         d['upToConstant'] = True
         d['latex'] = L(e) + ' + C'
+    d['_shape'] = expr_shape(e, vars, upc)
     return d
 
 
@@ -122,7 +209,7 @@ def P_int(label, s):
     ivs = set_to_intervals(s)
     return {'kind': 'interval', 'label': label,
             'answer': [[js(a), js(b), lc, hc] for a, b, lc, hc in ivs],
-            'latex': interval_latex(ivs)}
+            'latex': interval_latex(ivs), '_shape': iv_shape(ivs)}
 
 
 def set_latex(vals):
@@ -133,7 +220,7 @@ def set_latex(vals):
 def P_set(label, vals):
     vals = sorted([sp.sympify(v) for v in vals], key=val)
     return {'kind': 'set', 'label': label, 'answer': [js(v) for v in vals],
-            'latex': set_latex(vals)}
+            'latex': set_latex(vals), '_shape': set_shape(vals)}
 
 
 def P_choice(label, options, correct):
@@ -194,30 +281,51 @@ def mcq(correct_latex, distractors, max_opts=6):
 
 # ---------------------------------------------------------------- bank
 
+def clean(o):
+    """Remove stray backslashes before quotes (from raw strings like r'L\\'Hopital')."""
+    if isinstance(o, str):
+        return o.replace("\\'", "'")
+    if isinstance(o, list):
+        return [clean(v) for v in o]
+    if isinstance(o, dict):
+        return {k: clean(v) for k, v in o.items()}
+    return o
+
+
 class Bank:
     def __init__(self, topic, seed):
         self.topic = topic
         self.items = []
         self.seen = set()
         self.rng = random.Random(seed)
+        self.fn = None
+        self.hints = {}
 
-    def add(self, prompt, parts, solution, points=4, mcq_=None, diff=2):
+    def add(self, prompt, parts, solution, points=4, mcq_=None, diff=2, hint=None):
         if prompt in self.seen:
             return False
         self.seen.add(prompt)
         q = {'id': '%s-%03d' % (self.topic, len(self.items) + 1), 'topic': self.topic,
              'prompt': prompt, 'parts': parts, 'solution': solution,
              'points': points, 'difficulty': diff}
+        method = hint or self.hints.get(self.fn)
+        shapes = []
+        for p in parts:
+            s = p.pop('_shape', None)
+            if s:
+                shapes.append(((p['label'] + ' ') if len(parts) > 1 else '') + s)
+        q['hints'] = ([method] if method else []) + ([' '.join(shapes)] if shapes else [])
         if mcq_:
             q['mcq'] = mcq_
         elif len(parts) == 1 and parts[0]['kind'] == 'choice':
             q['mcq'] = {'options': parts[0]['options'], 'correct': parts[0]['answer'], 'native': True}
-        self.items.append(q)
+        self.items.append(clean(q))
         return True
 
     def fill(self, fn, n, tries=400):
         """Call fn() (which calls self.add) until n new items were added from it."""
         start = len(self.items)
+        self.fn = fn.__name__
         for _ in range(tries):
             if len(self.items) - start >= n:
                 break

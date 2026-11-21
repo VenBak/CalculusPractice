@@ -3,11 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Progress & exam history — Calculus & Probability</title>
-  <meta name="description" content="Practice tool for the Calculus &amp; Probability exam: topic drills with instant feedback and timed 90-point practice exams.">
+  <title>Progress — Calculus &amp; Probability</title>
+  <meta name="description" content="Exam history, score progression and topic practice statistics.">
+  <meta name="color-scheme" content="light dark">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="vendor/katex/katex.min.css">
   <link rel="stylesheet" href="css/style.css">
+  <script src="js/core/theme.js"></script>
 </head>
 <body data-page="history">
   <a class="skip" href="#app">Skip to content</a>
@@ -16,15 +18,19 @@
       <a class="brand" href="index.html"><span class="brand__mark" aria-hidden="true">∫</span><span class="brand__name">Calculus &amp; Probability<small>exam practice</small></span></a>
       <nav class="site-nav" aria-label="Main">
         <a href="index.html">Topics</a>
+        <a href="practice.html?mode=random">Random</a>
         <a href="exam.html">Practice exam</a>
+        <a href="past-exams.html">Past exams</a>
+        <a href="guide.html">Refreshers</a>
         <a href="history.html" aria-current="page">Progress</a>
-        <a href="reference.html">Reference page</a>
+        <a href="reference.html">Reference</a>
+        <a href="data.html">Data</a>
       </nav>
     </div>
   </header>
   <main id="app" class="wrap main"><p class="loading">Loading…</p></main>
   <footer class="site-footer">
-    <div class="wrap">Progress is stored only in this browser (localStorage). Export it from the <a href="history.html#data">Progress</a> page to move it to another device.</div>
+    <div class="wrap">Progress is stored only in this browser (localStorage). Use <a href="data.html">Backup &amp; transfer</a> to copy it to another device or browser.</div>
   </footer>
   <script src="vendor/katex/katex.min.js"></script>
   <script src="vendor/katex/contrib/auto-render.min.js"></script>
@@ -34,6 +40,7 @@
   <script src="js/core/storage.js"></script>
   <script src="js/core/bank.js"></script>
   <script src="js/core/ui.js"></script>
+  <script src="data/past-exams/index.js"></script>
   <script src="js/pages/history.js"></script>
 </body>
 </html>

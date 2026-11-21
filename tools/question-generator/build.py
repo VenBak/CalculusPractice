@@ -6,6 +6,7 @@ import json, os, sys, collections
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from common import Bank
 import foundations as F, derivatives as D, integrals as I, probability as P
+from hints import HINTS
 
 AREAS = [
     {'id': 'foundations', 'name': 'Foundations', 'weight': 20, 'lecture': 'L1'},
@@ -44,6 +45,7 @@ def main(out):
     stats = collections.Counter()
     for i, (tid, name, area, fn, desc) in enumerate(TOPICS):
         B = Bank(tid, 1000 + i)
+        B.hints = HINTS.get(tid, {})
         fn(B)
         assert len(B.items) >= 25, (tid, len(B.items))
         meta['topics'].append({'id': tid, 'name': name, 'area': area, 'description': desc, 'count': len(B.items)})
